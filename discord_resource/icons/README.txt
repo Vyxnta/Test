@@ -1,0 +1,1 @@
+Iconos locales del proyecto.
