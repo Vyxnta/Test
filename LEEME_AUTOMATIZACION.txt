@@ -1,0 +1,17 @@
+INSTALACIÓN AUTOMÁTICA DESDE GITHUB (MÓVIL)
+
+IMPORTANTE: el repositorio https://github.com/Vyxnta/Test que vimos solo tenía README.md y LICENSE, no el archivo de la aplicación. Este paquete contiene una copia de la aplicación y recursos del ZIP anterior, además de la automatización. Al subirlo, conserva una copia de seguridad de lo que ya tengas.
+
+1) Sube el contenido de este paquete al repositorio Vyxnta/Test. Asegúrate de incluir discord.html, discord_resource/, discord_data/, supabase-config.json, SUPABASE_SETUP.sql y .github/workflows/instalar-supabase.yml. No subas archivos con contraseñas.
+
+2) En Supabase, abre Project Settings > Database y localiza la cadena de conexión URI. Usa la conexión directa o Session pooler que muestre tu panel. No la pegues en el código ni en un mensaje.
+
+3) En GitHub, abre el repositorio > Settings > Secrets and variables > Actions > New repository secret. Nombre: SUPABASE_DB_URL. Valor: la cadena de conexión de PostgreSQL de tu proyecto. Guarda. Nunca uses la anon key como este secreto y nunca publiques la contraseña.
+
+4) Abre Actions > Preparar Supabase automáticamente > Run workflow. Escribe INSTALAR en el campo de confirmación y ejecuta. Abre el trabajo para ver si terminó con una marca verde.
+
+5) GitHub Pages debe estar configurado para publicar la rama main desde la carpeta raíz. Espera a que se publique y prueba iniciar sesión.
+
+ALCANCE REAL: esta acción ejecuta SUPABASE_SETUP.sql, que crea el guardado privado por cuenta (user_app_data), perfiles básicos y el bucket discord-assets. No instala por sí sola un sistema completo de servidores y mensajes compartidos entre cuentas. Para eso hace falta una migración adicional compatible con el esquema y la versión exacta de la aplicación. No se debe anunciar que la interacción entre usuarios está lista hasta instalar y probar esa parte.
+
+SEGURIDAD: la conexión a la base de datos se almacena como secreto de GitHub Actions. No la compartas ni la incluyas en archivos públicos. Si ya publicaste una contraseña, cámbiala en Supabase.

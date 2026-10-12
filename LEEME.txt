@@ -1,3 +1,5 @@
+VERSIÓN VACÍA: esta copia empieza sin servidores, canales, mensajes, MD ni amigos de muestra. Conserva el perfil local para que puedas personalizarlo.
+
 DISCORD WEB — SUPABASE + GUARDADO ENTRE DISPOSITIVOS
 
 INICIO
@@ -8,8 +10,7 @@ INICIO
 CHAT Y ADJUNTOS
 - En el botón + junto al cuadro de mensaje puedes elegir Contenido multimedia (imágenes, audio y vídeo), Archivos o Crear encuesta.
 - Los archivos de texto/código se identifican por extensión, muestran el lenguaje detectado, una vista previa y las funciones/clases reconocidas.
-- Mantén un mensaje presionado en móvil (o usa clic derecho en ordenador) para responder; el mensaje enviado conserva el vínculo y puedes pulsarlo para saltar al mensaje original. Los mensajes nuevos de servidores compartidos y de MD se guardan en `app_messages` y aparecen en tiempo real.
-- Las encuestas permiten votar con una sola opción o varias. Los votos se validan en Supabase mediante la función cast_discord_poll_vote y se difunden a los miembros del canal/MD en tiempo real. Los mensajes consecutivos del mismo usuario se agrupan cuando el intervalo es menor de 60 segundos; al pasar un minuto aparece un nuevo bloque.
+- Las encuestas permiten votar y pueden aceptar una sola opción o varias. Los mensajes consecutivos del mismo usuario se agrupan cuando el intervalo es menor de 60 segundos; al pasar un minuto aparece un nuevo bloque.
 - Los adjuntos se suben al bucket de Supabase Storage cuando hay conexión; también puede existir una copia local en IndexedDB. El estado completo de la cuenta se guarda en la tabla user_app_data.
 
 ANIMACIONES Y DECORACIÓN DE AVATAR
@@ -20,27 +21,25 @@ ANIMACIONES Y DECORACIÓN DE AVATAR
 - Cambia el nombre, descripción y color de acento; sube icono y portada; crea, edita o elimina canales de texto, foro y voz.
 - Usa el botón de compartir para generar una invitación portátil en código o archivo JSON.
 
-INVITACIONES Y SERVIDORES COMPARTIDOS
-- Con la sesión de Supabase conectada, abre el menú de Ajustes del servidor y pulsa Invitar. Se genera un código CLOUD1 con un enlace compartible que añade miembros reales al servidor alojado en la nube.
-- Para unirte, pulsa + en la barra de servidores y elige Unirse a un servidor; pega el código CLOUD1, el enlace o el JSON de invitación descargado.
-- Los canales, los mensajes del servidor, los adjuntos, las imágenes y los enlaces de icono/portada se comparten mediante las tablas colaborativas y el bucket `discord-assets`. El historial accesible se carga por páginas, sin el tope artificial de 500 mensajes; los mensajes nuevos se actualizan en tiempo real.
-- Los perfiles públicos incluyen avatar, banner y decoración de avatar. Los banners se editan desde Perfil con «Cambiar banner»; las imágenes y GIF personalizadas se suben a Storage.
-- Los códigos DCL1 antiguos siguen importándose como copias locales; no conectan miembros entre sí. Para colaboración real, crea una invitación nueva tras instalar la versión actualizada.
-- El enlace compartido debe apuntar a la página desplegada de esta app (hosting/servidor web). Un enlace file:// solo funciona en el dispositivo que tiene ese archivo.
+INVITACIONES
+- Para invitar, abre el menú de Ajustes del servidor y pulsa Invitar; copia el código DCL1 o guarda el archivo JSON.
+- Para unirte, pulsa + en la barra de servidores y selecciona «Unirse con invitación», o entra a Explorar servidores > Unirse.
+- Puedes pegar el código, un enlace de invitación o el contenido JSON descargado. En Ajustes > Importar copia también se acepta un JSON de invitación.
+- Si envías el enlace file:// a otro dispositivo, probablemente no abrirá allí porque apunta a un archivo de tu propio dispositivo. Envía el código DCL1 o el archivo JSON.
 
 LÍMITES IMPORTANTES
-Esto es una recreación inspirada en Discord, no la plataforma oficial. Una vez conectado Supabase y ejecutada la migración colaborativa, los datos privados se sincronizan entre dispositivos con la misma cuenta; los servidores aceptados mediante invitación CLOUD1 comparten mensajes y multimedia entre sus miembros. Las invitaciones DCL1 antiguas solo importan estructura local y no conectan usuarios en tiempo real. Los iconos, portadas, marcos SVG y GIF incluidos son recursos originales.
+Esto es una recreación inspirada en Discord, no la plataforma oficial. Una vez conectado Supabase y ejecutado el SQL actualizado, los datos de la cuenta se sincronizan entre dispositivos que usen esa misma cuenta. Las invitaciones portátiles importan solo la estructura y los canales del servidor, no los mensajes ni archivos multimedia. Los iconos, portadas, marcos SVG y GIF incluidos son recursos originales.
 
 CUENTAS Y SUPABASE (NUEVO)
 1. En Supabase abre Project Settings / API Keys y copia la Project URL y una Publishable API key (sb_publishable_...). También se admite la clave legacy anon/public. No pegues `service_role` ni `sb_secret_` en el HTML o JSON.
 2. Edita `supabase-config.json`, rellenando `projectUrl` y `publishableKey`. Este archivo debe permanecer junto a `discord.html`.
-3. En Supabase > SQL Editor, ejecuta todo el archivo `SUPABASE_SETUP.sql`. Además de perfiles, guardado por cuenta y el bucket `discord-assets`, incluye servidores compartidos, miembros, canales, mensajes, mensajes directos y las funciones de invitación. Si ya ejecutaste una versión anterior del setup, ejecuta ahora todo el archivo actualizado `SUPABASE_INTERACCIONES.sql` para aplicar las tablas colaborativas, agregar `banner_url` y `avatar_decoration`, habilitar votos compartidos y actualizar permisos sin borrar los datos existentes. El correo de inicio de sesión no se publica en los perfiles.
-   Si el guardado falla, abre Ajustes > Guardado y pulsa `Sincronizar ahora`: la app mostrará un mensaje específico para tabla ausente, permisos RLS, clave de API o problemas de Storage. Los archivos multimedia que no se logren subir a Storage no se publican como datos base64 en los mensajes compartidos; la aplicación avisará que el elemento solo quedó local hasta poder subirlo.
+3. En Supabase > SQL Editor, ejecuta todo el archivo `SUPABASE_SETUP.sql`. Crea perfiles, almacenamiento completo por cuenta, bucket `discord-assets` y políticas de acceso. El correo de inicio de sesión no se publica en los perfiles.
+   Si el guardado falla, abre Ajustes > Guardado y pulsa `Sincronizar ahora`: la app mostrará un mensaje específico para tabla ausente, permisos RLS, clave de API o problemas de Storage. Si falla la subida de un archivo multimedia pero sí puede guardarse la fila, intenta conservarlo dentro del respaldo JSON de la cuenta y señala el archivo que falló.
 4. Para leer automáticamente `supabase-config.json`, abre el proyecto desde un servidor web o súbelo a un hosting estático conservando las carpetas de recursos. Si lo abres como `file://`, pulsa «Elegir supabase-config.json» en la pantalla de conexión: el navegador no permite que el HTML lea otro archivo automáticamente desde esa ruta.
 5. En Android/Termux puedes entrar a la carpeta extraída y ejecutar `python -m http.server 8080`; luego abre `http://127.0.0.1:8080/discord.html` en el mismo dispositivo mientras el servidor siga encendido. En Supabase > Authentication > URL Configuration agrega esa URL a las URLs permitidas para que funcionen confirmaciones y recuperación de contraseña.
 6. Al abrir por primera vez verás «Conectar con Supabase». Después de conectar, se abre la pantalla de registro. Si Supabase exige confirmar el correo, revisa tu bandeja y después inicia sesión.
 7. En Ajustes > Cuenta puedes cerrar sesión, cambiar contraseña y solicitar cambiar el correo/Gmail. Los cambios de correo pueden requerir confirmar enlaces enviados a la dirección actual y a la nueva.
 8. Pulsa el nombre o el avatar en los mensajes para abrir perfiles. En el icono de lupa/usuarios puedes ver otros perfiles registrados. Solo se muestran datos públicos del perfil.
 
-DATOS EN LA NUBE Y PRIVACIDAD
-El guardado privado por cuenta permanece en `user_app_data`. Los servidores compartidos, sus miembros y canales se guardan aparte en `app_servers`, `app_server_members` y `app_channels`; los mensajes y respuestas se guardan en `app_messages` y los MD reales en `app_conversations`/`app_conversation_members`. Las imágenes, banners, iconos y archivos se suben a Supabase Storage (`discord-assets`) y la base de datos conserva sus URLs. Los banners de perfil y decoraciones públicas se publican como `banner_url` y `avatar_decoration` en `profiles`. Los servidores importados con invitación CLOUD1 se sincronizan entre miembros; una invitación DCL1 antigua solo importa una copia local. La aplicación necesita que el archivo SQL de interacción se haya aplicado en Supabase y que la web esté publicada en una URL accesible a los invitados.
+LÍMITES ACTUALES DE ESTA INTEGRACIÓN
+La autenticación, perfiles y estado completo se sincronizan con Supabase. El estado guardado incluye servidores, canales, mensajes, amigos, configuración, pestañas de perfil, decoraciones y referencias de avatares/archivos. La sincronización es por cuenta: un servidor no se convierte automáticamente en un espacio compartido en tiempo real con otras cuentas, y los mensajes aún no tienen permisos/roles compartidos de comunidad. Ejecuta el SUPABASE_SETUP.sql actualizado para crear user_app_data y el bucket discord-assets. Los archivos se organizan por usuario en subcarpetas avatars, decorations, attachments, servers y assets.
