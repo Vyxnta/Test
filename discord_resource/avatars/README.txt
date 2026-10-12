@@ -1,0 +1,1 @@
+La foto de perfil predeterminada se carga desde discord_resource/avatars/. Al subir otra foto se guardará aquí.
