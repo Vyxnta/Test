@@ -1,0 +1,1 @@
+Este proyecto usa archivo.html como interfaz y no necesita recursos externos.

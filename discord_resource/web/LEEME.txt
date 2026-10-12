@@ -1,0 +1,1 @@
+archivo.html es la interfaz principal. Mantén esta carpeta y discord_resource junto al HTML para que los gráficos SVG locales carguen correctamente. No se usan bibliotecas ni servicios externos.
