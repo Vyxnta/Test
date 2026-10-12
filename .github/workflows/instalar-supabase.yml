@@ -1,0 +1,30 @@
+name: Preparar Supabase automáticamente
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirmar:
+        description: "Escribe INSTALAR para aplicar la configuración de Supabase"
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  install:
+    if: ${{ inputs.confirmar == 'INSTALAR' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar el repositorio
+        uses: actions/checkout@v4
+      - name: Instalar cliente PostgreSQL
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y postgresql-client
+      - name: Aplicar configuración inicial de Supabase
+        env:
+          SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+        run: |
+          test -n "$SUPABASE_DB_URL" || { echo "Falta el secreto SUPABASE_DB_URL en Settings > Secrets and variables > Actions."; exit 1; }
+          psql "$SUPABASE_DB_URL" -v ON_ERROR_STOP=1 -f SUPABASE_SETUP.sql
