@@ -1,0 +1,16 @@
+{
+  "format": "discord-local-avatar-decoration",
+  "version": 1,
+  "decoration": {
+    "id": "rose-orbit",
+    "name": "Rose Orbit",
+    "file": "rose-orbit.gif",
+    "type": "gif",
+    "animated": true,
+    "pos": "overlay",
+    "x": 0,
+    "y": 0,
+    "scale": 1.34,
+    "fps": 12
+  }
+}

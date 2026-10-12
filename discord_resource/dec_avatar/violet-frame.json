@@ -1,0 +1,16 @@
+{
+  "format": "discord-local-avatar-decoration",
+  "version": 1,
+  "decoration": {
+    "id": "violet-frame",
+    "name": "Violet Frame",
+    "file": "violet-frame.svg",
+    "type": "svg",
+    "animated": true,
+    "pos": "overlay",
+    "x": 0,
+    "y": 0,
+    "scale": 1.22,
+    "fps": 8
+  }
+}

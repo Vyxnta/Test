@@ -1,0 +1,54 @@
+{
+  "format": "discord-local-avatar-decoration",
+  "version": 1,
+  "decorations": [
+    {
+      "id": "rose-orbit",
+      "name": "Rose Orbit",
+      "file": "discord_resources/dec_avatar/rose-orbit.gif",
+      "pos": "overlay",
+      "x": 0,
+      "y": 0,
+      "scale": 1.34,
+      "fps": 12,
+      "type": "gif",
+      "animated": true
+    },
+    {
+      "id": "starlight",
+      "name": "Starlight",
+      "file": "discord_resources/dec_avatar/starlight.gif",
+      "pos": "overlay",
+      "x": 0,
+      "y": 0,
+      "scale": 1.28,
+      "fps": 10,
+      "type": "gif",
+      "animated": true
+    },
+    {
+      "id": "violet-frame",
+      "name": "Violet Frame",
+      "file": "discord_resources/dec_avatar/violet-frame.svg",
+      "pos": "overlay",
+      "x": 0,
+      "y": 0,
+      "scale": 1.22,
+      "fps": 8,
+      "type": "svg",
+      "animated": true
+    },
+    {
+      "id": "none",
+      "name": "Sin decoración",
+      "file": "",
+      "pos": "overlay",
+      "x": 0,
+      "y": 0,
+      "scale": 1,
+      "fps": 12,
+      "type": "none",
+      "animated": false
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "format": "discord-local-avatar-decoration",
+  "version": 1,
+  "decoration": {
+    "id": "none",
+    "name": "Sin decoración",
+    "file": "",
+    "type": "none",
+    "animated": false,
+    "pos": "overlay",
+    "x": 0,
+    "y": 0,
+    "scale": 1,
+    "fps": 12
+  }
+}
